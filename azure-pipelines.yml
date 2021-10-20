@@ -21,6 +21,10 @@ steps:
       # sonar.exclusions=**/*.bin
       sonar.projectKey=birdmodify69_spring-boot-demo
 
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+
 
 
     
