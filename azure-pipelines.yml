@@ -21,12 +21,10 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
     
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'spring-boot:build-image'
-    publishJUnitResults: false
-    jdkVersionOption: '1.8'
-
     
-
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/target'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+    StoreAsTar: true
