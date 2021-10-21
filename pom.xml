@@ -30,6 +30,8 @@
         <com.google.guava.guava.version>21.0</com.google.guava.guava.version>
         <io.springfox.springfox-swagger2>2.3.1</io.springfox.springfox-swagger2>
         <io.springfox.springfox-swagger-ui>2.3.1</io.springfox.springfox-swagger-ui>
+        <sonar.organization>birdmodify69</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
