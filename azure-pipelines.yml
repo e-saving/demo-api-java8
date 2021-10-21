@@ -25,7 +25,10 @@ steps:
 
 
 
-- task: SonarCloudAnalyze@1
+- script: |
+    echo Starting the build
+    mvn --version
+  displayName: 'Test Script with Maven'
 
 
 
