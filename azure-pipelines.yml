@@ -23,21 +23,11 @@ steps:
       sonar.branch.name=develop
 
 
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'    
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'    
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false    
-    sonarQubeRunAnalysis: false    
-    sqMavenPluginVersionChoice: 'latest'
 
 
 - task: SonarCloudAnalyze@1
+
+
 
 - task: SonarCloudPublish@1
   inputs:
