@@ -23,13 +23,19 @@ steps:
       sonar.branch.name=develop
 
 
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean verify sonar:sonar'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    codeCoverageToolOption: JaCoCo
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'    
+    mavenVersionOption: 'Default'
 
-
-- script: |
-    echo Starting the build
-    mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=birdmodify69_spring-boot-demo
-  displayName: 'Test Script with Maven'
-
+- task: SonarCloudAnalyze@1
 
 
 - task: SonarCloudPublish@1
