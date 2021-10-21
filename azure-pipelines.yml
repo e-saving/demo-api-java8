@@ -33,10 +33,11 @@ steps:
     jdkArchitectureOption: 'x64'    
     mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false    
-    sonarQubeRunAnalysis: true
-    isJacocoCoverageReportXML: true
+    sonarQubeRunAnalysis: false    
     sqMavenPluginVersionChoice: 'latest'
 
+
+- task: SonarCloudAnalyze@1
 
 - task: SonarCloudPublish@1
   inputs:
