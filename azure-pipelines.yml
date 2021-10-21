@@ -20,6 +20,7 @@ steps:
       # Put one key=value per line, example:
       # sonar.exclusions=**/*.bin
       sonar.projectKey=birdmodify69_spring-boot-demo
+      sonar.branch.name=develop
 
 
 - task: Maven@3
