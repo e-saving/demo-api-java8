@@ -27,12 +27,10 @@ steps:
   inputs:
     mavenPomFile: 'pom.xml'
     publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    codeCoverageToolOption: 'JaCoCo'
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'    
     javaHomeOption: 'JDKVersion'
     mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
+    mavenAuthenticateFeed: false    
     sonarQubeRunAnalysis: true
     isJacocoCoverageReportXML: true
     sqMavenPluginVersionChoice: 'latest'
