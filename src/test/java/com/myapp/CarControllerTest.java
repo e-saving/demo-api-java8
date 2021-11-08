@@ -44,7 +44,7 @@ public class CarControllerTest {
         String exampleCar = "{\"licensePlate\":\"546PW\",\"seatCount\":\"4\",\"convertible\":\"false\",\"rating\":\"10\",\"engineType\":\"GAS\",\"manufacturer\":\"MERCEDES\"}";
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/v1/cars")
+                .post("/v2/cars")
                 .accept(MediaType.APPLICATION_JSON).content(exampleCar)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -61,7 +61,7 @@ public class CarControllerTest {
         Mockito.when(carService.find(LICENSE_PLATE)).thenReturn(carDOResult);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/v1/cars/"+LICENSE_PLATE).accept(
+                "/v2/cars/"+LICENSE_PLATE).accept(
                 MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
