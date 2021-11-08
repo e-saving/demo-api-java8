@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("v1/cars")
+@RequestMapping("v2/cars")
 public class CarController {
 
     private final CarService carService;
