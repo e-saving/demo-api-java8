@@ -68,51 +68,52 @@ jobs:
         echo "Version is ${{ env.VERSION_NO }}"
         
     - name: Build with Maven
-      #run: mvn -B package -Pcoverage
-      run: mvn cobertura:cobertura
+      run: mvn -B package -Pcoverage
+      #run: mvn cobertura:cobertura
       
     #- name: Copy Coverage To Predictable Location
     #  run: cp target/site/cobertura/coverage.cobertura.xml coverage/coverage.cobertura.xml
       
-    - name: Code Coverage Summary Report
-      uses: irongut/CodeCoverageSummary@v1.0.2
-      # uses: joshjohanning/CodeCoverageSummary@v1.0.2
-      with:
-        filename: target/site/cobertura/coverage.xml
-        badge: true
-        format: 'markdown'
-        output: 'both'     
+    #- name: Code Coverage Summary Report
+    #  uses: irongut/CodeCoverageSummary@v1.0.2
+    #  # uses: joshjohanning/CodeCoverageSummary@v1.0.2
+    #  with:
+    #    filename: target/site/cobertura/coverage.xml
+    #    badge: true
+    #    format: 'markdown'
+    #    output: 'both'     
 
 
-    - name: Add Coverage PR Comment
-      uses: marocchino/sticky-pull-request-comment@v2
-      #if: github.event_name == 'pull_request'
-      with:
-        recreate: true
-        path: code-coverage-results.md
+    #- name: Add Coverage PR Comment
+    #  uses: marocchino/sticky-pull-request-comment@v2
+    #  #if: github.event_name == 'pull_request'
+    #  with:
+    #    recreate: true
+    #    path: code-coverage-results.md
           
-    #- name: Generate JaCoCo badge
-    #  id: jacoco
-    #  uses: cicirello/jacoco-badge-generator@v2
-    #  with:
-    #    badges-directory: badges
-    #    generate-branches-badge: true
-    #    generate-summary: true
+    - name: Generate JaCoCo badge
+      id: jacoco
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        badges-directory: badges
+        generate-branches-badge: true
+        generate-summary: true
 
-    #- run: | 
-    #    ls -l
-    #    ls -l target/site/jacoco/
+    - run: | 
+        ls -l
+        ls -l badges
+        ls -l target/site/jacoco/
       
-    #- name: Log coverage percentages to workflow output
-    #  run: |
-    #    echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
-    #    echo "branches = ${{ steps.jacoco.outputs.branches }}"
+    - name: Log coverage percentages to workflow output
+      run: |
+        echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
+        echo "branches = ${{ steps.jacoco.outputs.branches }}"
 
-    #- name: Upload JaCoCo coverage report as a workflow artifact
-    #  uses: actions/upload-artifact@v2
-    #  with:
-    #    name: jacoco-report
-    #    path: target/site/jacoco/
+    - name: Upload JaCoCo coverage report as a workflow artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: jacoco-report
+        path: target/site/jacoco/
 
 
     #- name: Generate JaCoCo Badges 
@@ -123,12 +124,12 @@ jobs:
     #    coverage-badge-filename: jacoco.svg
     #    branches-badge-filename: branches.svg  
 
-    #- name: Commit and push the badge (if it changed)
-    #  uses: EndBug/add-and-commit@v7
-    #  with:
-    #    default_author: github_actions
-    #    message: 'commit badge'
-    #    add: '*.svg'
+    - name: Commit and push the badge (if it changed)
+      uses: EndBug/add-and-commit@v7
+      with:
+        default_author: github_actions
+        message: 'commit badge'
+        add: '*.svg'
 
 
     #- name: Generate JaCoCo Badge    
@@ -136,13 +137,13 @@ jobs:
     #  with:
     #    generate-branches-badge: true
     
-    #- name: Add coverage to PR
-    #  uses: madrapps/jacoco-report@v1.2
-    #  with:
-    #    paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
-    #    token: ${{ secrets.GITHUB_TOKEN }}
-    #    min-coverage-overall: 40
-    #    min-coverage-changed-files: 60
+    - name: Add coverage to PR
+      uses: madrapps/jacoco-report@v1.2
+      with:
+        paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
+        token: ${{ secrets.GITHUB_TOKEN }}
+        min-coverage-overall: 40
+        min-coverage-changed-files: 60
 
     #- name: Commit and push the coverage badges and summary file
     #  if: ${{ github.event_name != 'pull_request' }}

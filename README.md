@@ -1,5 +1,12 @@
 # Spring boot application example
 
+Total Unit Test Result
+|  Result Type | Result  |
+|---|---|
+| coverage  | ![](https://github.com/bsalab/gitaction-lab-api/blob/eb98cae84261e318fd1c921e9555f326de2040d1/badges/jacoco.svg)  |
+| branches  | ![](https://github.com/bsalab/gitaction-lab-api/blob/eb98cae84261e318fd1c921e9555f326de2040d1/badges/branches.svg)  |
+
+
 The project is based on a small web service which uses the following technologies:
 
 * Java 1.8
