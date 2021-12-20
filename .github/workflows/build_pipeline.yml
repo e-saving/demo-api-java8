@@ -87,6 +87,21 @@ jobs:
         name: jacoco-report
         path: target/site/jacoco/
 
+    - name: Generate JaCoCo Badge
+     # id: jacoco
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        generate-branches-badge: true
+    
+    - name: Add coverage to PR
+      #id: jacoco
+      uses: madrapps/jacoco-report@v1.2
+      with:
+        paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
+        token: ${{ secrets.GITHUB_TOKEN }}
+        min-coverage-overall: 40
+        min-coverage-changed-files: 60
+
     #- name: Commit and push the coverage badges and summary file
     #  if: ${{ github.event_name != 'pull_request' }}
     #  run: |
@@ -99,17 +114,17 @@ jobs:
     #      git push
     #    fi
 
-    - name: Comment on PR with coverage percentages
-      #if: ${{ github.event_name == 'pull_request' }}
-      run: |
-        REPORT=$(<badges/coverage-summary.json)
-        COVERAGE=$(jq -r '.coverage' <<< "$REPORT")%
-        BRANCHES=$(jq -r '.branches' <<< "$REPORT")%
-        NEWLINE=$'\n'
-        BODY="## JaCoCo Test Coverage Summary Statistics${NEWLINE}* __Coverage:__ ${COVERAGE}${NEWLINE}* __Branches:__ ${BRANCHES}"
-        gh pr comment ${{ github.sha }} -b "${BODY}"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #- name: Comment on PR with coverage percentages
+    #  #if: ${{ github.event_name == 'pull_request' }}
+    #  run: |
+    #    REPORT=$(<badges/coverage-summary.json)
+    #    COVERAGE=$(jq -r '.coverage' <<< "$REPORT")%
+    #    BRANCHES=$(jq -r '.branches' <<< "$REPORT")%
+    #    NEWLINE=$'\n'
+    #    BODY="## JaCoCo Test Coverage Summary Statistics${NEWLINE}* __Coverage:__ ${COVERAGE}${NEWLINE}* __Branches:__ ${BRANCHES}"
+    #    gh pr comment ${{ github.sha }} -b "${BODY}"
+    #  env:
+    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
 
 
