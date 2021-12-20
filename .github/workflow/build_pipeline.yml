@@ -15,7 +15,7 @@ env:
   CONTAINER_REPO: 'birdmodify/birdtest-backend'
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,15 +30,5 @@ jobs:
         
     - name: Unit Testing
       run: mvn test
-    
-    - run: |
-        ls -l
-        ls -l target
-        
-    - name: Build Package
-      run: mvn clean install
-    
-    - run: |
-        ls -l
-        ls -l target
+
    
