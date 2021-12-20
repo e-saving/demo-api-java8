@@ -7,9 +7,10 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
-      #- '.github/**'
+      - '.github/**'
       - 'version.txt'  
       - '*.svg'
+      - '*.md'
   workflow_dispatch: 
 
 jobs:
@@ -68,30 +69,50 @@ jobs:
         
     - name: Build with Maven
       #run: mvn -B package -Pcoverage
-      run: mvn -B test
-          
-    - name: Generate JaCoCo badge
-      id: jacoco
-      uses: cicirello/jacoco-badge-generator@v2
-      with:
-        badges-directory: badges
-        generate-branches-badge: true
-        generate-summary: true
-
-    - run: | 
-        ls -l
-        ls -l target/site/jacoco/
+      run: mvn cobertura:cobertura
       
-    - name: Log coverage percentages to workflow output
-      run: |
-        echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
-        echo "branches = ${{ steps.jacoco.outputs.branches }}"
-
-    - name: Upload JaCoCo coverage report as a workflow artifact
-      uses: actions/upload-artifact@v2
+    #- name: Copy Coverage To Predictable Location
+    #  run: cp target/site/cobertura/coverage.cobertura.xml coverage/coverage.cobertura.xml
+      
+    - name: Code Coverage Summary Report
+      uses: irongut/CodeCoverageSummary@v1.0.2
+      # uses: joshjohanning/CodeCoverageSummary@v1.0.2
       with:
-        name: jacoco-report
-        path: target/site/jacoco/
+        filename: target/site/cobertura/coverage.xml
+        badge: true
+        format: 'markdown'
+        output: 'both'     
+
+
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      #if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: code-coverage-results.md
+          
+    #- name: Generate JaCoCo badge
+    #  id: jacoco
+    #  uses: cicirello/jacoco-badge-generator@v2
+    #  with:
+    #    badges-directory: badges
+    #    generate-branches-badge: true
+    #    generate-summary: true
+
+    #- run: | 
+    #    ls -l
+    #    ls -l target/site/jacoco/
+      
+    #- name: Log coverage percentages to workflow output
+    #  run: |
+    #    echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
+    #    echo "branches = ${{ steps.jacoco.outputs.branches }}"
+
+    #- name: Upload JaCoCo coverage report as a workflow artifact
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: jacoco-report
+    #    path: target/site/jacoco/
 
 
     #- name: Generate JaCoCo Badges 
@@ -102,12 +123,12 @@ jobs:
     #    coverage-badge-filename: jacoco.svg
     #    branches-badge-filename: branches.svg  
 
-    - name: Commit and push the badge (if it changed)
-      uses: EndBug/add-and-commit@v7
-      with:
-        default_author: github_actions
-        message: 'commit badge'
-        add: '*.svg'
+    #- name: Commit and push the badge (if it changed)
+    #  uses: EndBug/add-and-commit@v7
+    #  with:
+    #    default_author: github_actions
+    #    message: 'commit badge'
+    #    add: '*.svg'
 
 
     #- name: Generate JaCoCo Badge    
