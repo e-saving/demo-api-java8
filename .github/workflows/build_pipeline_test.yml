@@ -38,8 +38,8 @@ jobs:
             new_version=${major_version}.${minor_version}.${new_build_version}
             echo "new_version=${new_version}"
             mkdir version
-            echo CUR_VERSION=${cur_version} >> version/version.txt
-            echo NEW_VERSION=${new_version} > version/version.txt
+            echo CUR_VERSION=${cur_version} > version/version.txt
+            echo NEW_VERSION=${new_version} >> version/version.txt
             sed -i ${{ env.POM_VERSION_LINE_NUMBER }}"s/<version>${cur_version}<\/version>/<version>${new_version}<\/version>/" pom.xml  
             cp pom.xml version/
             
