@@ -117,11 +117,11 @@ jobs:
           ls -l target      
           ls -l badges
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ env.ARTIFACT_NAME }}
-          path: target/*.jar
+      #- name: Upload build artifact
+      #  uses: actions/upload-artifact@v2
+      #  with:
+      #    name: ${{ env.ARTIFACT_NAME }}
+      #    path: target/*.jar
 
       #- name: Log in to ACR
       #  uses: azure/docker-login@v1
