@@ -3,8 +3,8 @@
 Total Unit Test Result
 |  Result Type | Result  |
 |---|---|
-| coverage  | ![](https://github.com/bsalab/gitaction-lab-api/blob/eb98cae84261e318fd1c921e9555f326de2040d1/badges/jacoco.svg)  |
-| branches  | ![](https://github.com/bsalab/gitaction-lab-api/blob/eb98cae84261e318fd1c921e9555f326de2040d1/badges/branches.svg)  |
+| coverage  | ![](https://raw.githubusercontent.com/e-saving/demo-api-java8/a75f133ae2d2fca0bc027b682cafccb41a8e8b7e/badges/jacoco.svg)  |
+| branches  | ![](https://raw.githubusercontent.com/e-saving/demo-api-java8/a75f133ae2d2fca0bc027b682cafccb41a8e8b7e/badges/branches.svg)  |
 
 
 The project is based on a small web service which uses the following technologies:
