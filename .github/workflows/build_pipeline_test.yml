@@ -5,7 +5,10 @@ on:
     branches: [ master ]
     paths-ignore:
       - '.github/**'      
+      - 'badges/*'      
       - 'pom.xml'
+      - '*.svg'
+      - '*.json'
       - '*.md'
   workflow_dispatch: 
   
@@ -104,13 +107,6 @@ jobs:
           name: jacoco-report
           path: target/site/jacoco/
 
-      - name: Commit and push the badge
-        uses: EndBug/add-and-commit@v7
-        with:
-          default_author: github_actions
-          message: 'commit badge'
-          add: '*.svg *.json'
-
       - run: | 
           ls -l target      
           ls -l badges
@@ -136,10 +132,20 @@ jobs:
 
       - name: Build and Push Container Image    
         run: |
+            ls -l
+            ls -l target
             docker build . -t ${{ env.CONTAINER_REPO }}:${{ env.VERSION_NO }} 
-            docker push ${{ env.CONTAINER_REPO }}:${{ env.VERSION_NO }} 
-            
-            
+            docker push ${{ env.CONTAINER_REPO }}:${{ env.VERSION_NO }}             
+            ls -l badges
+ 
+      - name: Commit and push the badge
+        uses: EndBug/add-and-commit@v7
+        with:
+          default_author: github_actions
+          message: 'commit badge'
+          add: '*.svg *.json'
+          branch: ${{ env.MANAGE_BRANCH }} 
+          
       - name: Run the Anchore scan action itself with GitHub Advanced Security code scanning integration enabled
         uses: anchore/scan-action@b08527d5ae7f7dc76f9621edb6e49eaf47933ccd
         with:
