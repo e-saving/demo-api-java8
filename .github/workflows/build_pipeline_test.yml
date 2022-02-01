@@ -38,7 +38,8 @@ jobs:
             new_version=${major_version}.${minor_version}.${new_build_version}
             echo "new_version=${new_version}"
             mkdir version
-            echo ${new_version} > version/version.txt
+            echo CUR_VERSION=${cur_version} >> version/version.txt
+            echo NEW_VERSION=${new_version} > version/version.txt
             sed -i ${{ env.POM_VERSION_LINE_NUMBER }}"s/<version>${cur_version}<\/version>/<version>${new_version}<\/version>/" pom.xml  
             cp pom.xml version/
             
@@ -70,16 +71,13 @@ jobs:
         with:
           name: version
 
-      - name: Check New Version         
+      - name: Check Current Version         
         run: |
-          new_version=$(cat version/version.txt)
-          echo "Version is ${new_version}"
-          echo "VERSION_NO=${new_version} " >> $GITHUB_ENV  
-          cp -f version/pom.xml .
-          pom_version=$(head -${{ env.POM_VERSION_LINE_NUMBER }} pom.xml|tail -1|grep -oPm1 "(?<=<version>)[^<]+")
-          echo "pom_version=${pom_version}"     
+          cur_version=$(cat version/version.txt|grep 'CUR_VERSION'|awk -F'=' '{print($2)}')
+          echo "Version is ${cur_version}"
+          echo "VERSION_NO=${cur_version} " >> $GITHUB_ENV    
           
-      - name: Build with Maven
+      - name: Unit Testing
         run: mvn test -Pcoverage
       
       - name: Generate JaCoCo badge
@@ -117,6 +115,12 @@ jobs:
           ls -l target      
           ls -l badges
 
+      - name: Build with Maven
+        run: mvn package -Pcoverage
+      
+      - run: | 
+         ls -l target 
+          
       #- name: Upload build artifact
       #  uses: actions/upload-artifact@v2
       #  with:
@@ -134,6 +138,25 @@ jobs:
         run: |
             docker build . -t ${{ env.CONTAINER_REPO }}:${{ env.VERSION_NO }} 
             docker push ${{ env.CONTAINER_REPO }}:${{ env.VERSION_NO }} 
+            
+            
+      - name: Run the Anchore scan action itself with GitHub Advanced Security code scanning integration enabled
+        uses: anchore/scan-action@b08527d5ae7f7dc76f9621edb6e49eaf47933ccd
+        with:
+          image: "${{ env.CONTAINER_REPO }}:${{ env.VERSION_NO }}  "
+          # Generate a SARIF report and set the `sarif` output parameter after successful action execution.  This report is compatible with GitHub Automated Code Scanning (ACS), as the artifact to upload for display as a Code Scanning Alert report.
+          acs-report-enable: true
+          # Set this to any value to enable verbose debug output
+          #debug: # optional, default is false
+          # Set to false to avoid failing based on severity-cutoff. Default is to fail when severity-cutoff is reached (or surpassed)
+          fail-build: false # optional, default is true      
+          # Optionally specify the minimum vulnerability severity to trigger an "error" level ACS result.  Valid choices are "negligible", "low", "medium", "high" and "critical".  Any vulnerability with a severity less than this value will lead to a "warning" result.  Default is "medium".
+          severity-cutoff: critical # optional, default is medium
+
+      - name: Upload Anchore Scan Report
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: results.sarif
           
   set-version:
     runs-on: ubuntu-latest    
@@ -151,7 +174,7 @@ jobs:
           
       - name: Check New Version         
         run: |
-          new_version=$(cat version/version.txt)
+          new_version=$(cat version/version.txt|grep 'NEW_VERSION'|awk -F'=' '{print($2)}')
           echo "Version is ${new_version}"
           echo "VERSION_NO=${new_version} " >> $GITHUB_ENV  
           cp -f version/pom.xml .
@@ -163,7 +186,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add pom.xml
-          git commit -m "update pom.xml version to be ${{ env.VERSION_NO }}"
+          git commit -m "update pom.xml new version to be ${{ env.VERSION_NO }}"
           
       - name: Push pom.xml changes
         uses: ad-m/github-push-action@master
