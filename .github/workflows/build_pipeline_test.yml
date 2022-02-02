@@ -80,8 +80,11 @@ jobs:
           echo "Version is ${cur_version}"
           echo "VERSION_NO=${cur_version} " >> $GITHUB_ENV    
           
-      - name: Unit Testing
-        run: mvn test -Pcoverage
+      #- name: Unit Testing
+      #  run: mvn test -Pcoverage
+        
+      - name: Build with Maven
+        run: mvn package -Pcoverage
       
       - name: Generate JaCoCo badge
         id: jacoco
@@ -111,11 +114,11 @@ jobs:
           ls -l target      
           ls -l badges
 
-      - name: Build with Maven
-        run: mvn package -Pcoverage
+      #- name: Build with Maven
+      #  run: mvn package -Pcoverage
       
-      - run: | 
-         ls -l target 
+      #- run: | 
+      #   ls -l target 
           
       #- name: Upload build artifact
       #  uses: actions/upload-artifact@v2
