@@ -3,8 +3,8 @@
 Total Unit Test Result
 |  Result Type | Result  |
 |---|---|
-| coverage  | ![](https://raw.githubusercontent.com/e-saving/demo-api-java8/a75f133ae2d2fca0bc027b682cafccb41a8e8b7e/badges/jacoco.svg)  |
-| branches  | ![](https://raw.githubusercontent.com/e-saving/demo-api-java8/a75f133ae2d2fca0bc027b682cafccb41a8e8b7e/badges/branches.svg)  |
+| coverage  | ![](./badges/jacoco.svg)  |
+| branches  | ![](./badges/branches.svg)  |
 
 
 The project is based on a small web service which uses the following technologies:
