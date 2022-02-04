@@ -15,7 +15,7 @@ on:
 env:
   #default is develop
   SOURCECODE_MANAGE_BRANCH: master
-  SOURCECODE_HOME_PATH: api-demo-java11
+  SOURCECODE_HOME_PATH: api-demo-java8
   #GITLAB_REPO: git.g-able.com/ais-esaving/service-a.git
     
   POM_VERSION_LINE_NUMBER: 8
