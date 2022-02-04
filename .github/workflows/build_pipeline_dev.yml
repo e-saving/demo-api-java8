@@ -18,7 +18,7 @@ env:
   SOURCECODE_HOME_PATH: api-demo-java11
   #GITLAB_REPO: git.g-able.com/ais-esaving/service-a.git
     
-  POM_VERSION_LINE_NUMBER: 13
+  POM_VERSION_LINE_NUMBER: 8
   
   SONAR_PROJECT_KEY: api-demo-java8
   
