@@ -37,7 +37,7 @@ jobs:
       - name: "Prepare Configuration" 
         uses: e-saving/birdtest-template-cicd/Dev/PrepareConfigurationAction@main
         with: 
-          gitops_repo: e-saving/gitops_deployment
+          gitops_repo: "e-saving/gitops_deployment"
           gitops_manage_branch: develop
           gitops_token: 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
           gitops_app_name: api-demo-java8
