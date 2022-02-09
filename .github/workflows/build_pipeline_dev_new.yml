@@ -14,8 +14,8 @@ on:
   
 env:
   #default is develop
-  #SOURCECODE_MANAGE_BRANCH: master
-  #SOURCECODE_HOME_PATH: api-demo-java8
+  SOURCECODE_MANAGE_BRANCH: master
+  SOURCECODE_HOME_PATH: api-demo-java8
   #GITLAB_REPO: git.g-able.com/ais-esaving/service-a.git
     
   #POM_VERSION_LINE_NUMBER: 8
@@ -24,8 +24,8 @@ env:
   
   #DOCKER_IMAGE_NAME: api-demo-java8
   
-  #GITOPS_MANAGE_BRANCH: develop
-  #GITOPS_MANAGE_HOME_PATH: api-demo-java8
+  GITOPS_MANAGE_BRANCH: develop
+  GITOPS_APP_NAME: api-demo-java8
   
   
 jobs:
@@ -37,8 +37,9 @@ jobs:
       - name: "Prepare Configuration" 
         uses: e-saving/birdtest-template-cicd/Dev/PrepareConfigurationAction@main
         with: 
-          param_1: "Test Param1"
-          param_2: "Test Param2"
-          param_3: "Test Param3"
+          gitops_repo: ${{ secrets.GITOPS_REPO_DEV }}
+          gitops_manage_branch: ${{ env.GITOPS_MANAGE_BRANCH }}
+          gitops_token: ${{ secrets.GITOPS_TOKEN }}
+          gitops_app_name: ${{ env.GITOPS_APP_NAME }}
       
      
