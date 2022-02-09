@@ -38,11 +38,11 @@ jobs:
         uses: e-saving/birdtest-template-cicd/Dev/PrepareConfigurationAction@main
         id: test
         with: 
-          gitops_repo: "e-saving/gitops_deployment"
-          gitops_manage_branch: ${{ secrets.GITOPS_MANAGE_BRANCH }}
+          gitops_repo: ${{ secrets.GITOPS_REPO_DEV }}
+          gitops_manage_branch: ${{ env.GITOPS_MANAGE_BRANCH }}
           gitops_token: ${{ secrets.GITOPS_TOKEN }}
-          gitops_app_name: ${{ secrets.GITOPS_APP_NAME }}
-          sourcecode_manage_branch: ${{ secrets.SOURCECODE_MANAGE_BRANCH }}
+          gitops_app_name: ${{ env.GITOPS_APP_NAME }}
+          sourcecode_manage_branch: ${{ env.SOURCECODE_MANAGE_BRANCH }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
       
      
