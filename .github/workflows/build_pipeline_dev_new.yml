@@ -39,7 +39,7 @@ jobs:
         with: 
           gitops_repo: "e-saving/gitops_deployment"
           gitops_manage_branch: develop
-          gitops_token: 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
+          gitops_token: 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
           gitops_app_name: api-demo-java8
       
      
