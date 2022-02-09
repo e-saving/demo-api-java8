@@ -14,18 +14,18 @@ on:
   
 env:
   #default is develop
-  SOURCECODE_MANAGE_BRANCH: master
-  SOURCECODE_HOME_PATH: api-demo-java8
+  #SOURCECODE_MANAGE_BRANCH: master
+  #SOURCECODE_HOME_PATH: api-demo-java8
   #GITLAB_REPO: git.g-able.com/ais-esaving/service-a.git
     
-  POM_VERSION_LINE_NUMBER: 8
+  #POM_VERSION_LINE_NUMBER: 8
   
-  SONAR_PROJECT_KEY: api-demo-java8
+  #SONAR_PROJECT_KEY: api-demo-java8
   
-  DOCKER_IMAGE_NAME: api-demo-java8
+  #DOCKER_IMAGE_NAME: api-demo-java8
   
-  GITOPS_MANAGE_BRANCH: develop
-  GITOPS_MANAGE_HOME_PATH: api-demo-java8
+  #GITOPS_MANAGE_BRANCH: develop
+  #GITOPS_MANAGE_HOME_PATH: api-demo-java8
   
   
 jobs:
