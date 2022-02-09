@@ -1,0 +1,44 @@
+name: Build Pipeline to Dev
+
+on:          
+  push:
+    branches: [ develop ]
+    paths-ignore:
+      - '.github/**'
+      - 'badges/*'
+      - 'pom.xml'
+      - '*.svg'
+      - '*.json'
+      - '*.md'
+  workflow_dispatch:
+  
+env:
+  #default is develop
+  SOURCECODE_MANAGE_BRANCH: master
+  SOURCECODE_HOME_PATH: api-demo-java8
+  #GITLAB_REPO: git.g-able.com/ais-esaving/service-a.git
+    
+  POM_VERSION_LINE_NUMBER: 8
+  
+  SONAR_PROJECT_KEY: api-demo-java8
+  
+  DOCKER_IMAGE_NAME: api-demo-java8
+  
+  GITOPS_MANAGE_BRANCH: develop
+  GITOPS_MANAGE_HOME_PATH: api-demo-java8
+  
+  
+jobs:
+  generate-version:
+    runs-on: ubuntu-latest
+    environment: develop
+    
+    steps:
+      - name: "Prepare Configuration" 
+        uses: e-saving/birdtest-template-cicd/Dev/PrepareConfigurationAction@main
+        with: 
+          param_1: "Test Param1"
+          param_2: "Test Param2"
+          param_3: "Test Param3"
+      
+     
