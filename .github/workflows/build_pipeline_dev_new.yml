@@ -37,9 +37,9 @@ jobs:
       - name: "Prepare Configuration" 
         uses: e-saving/birdtest-template-cicd/Dev/PrepareConfigurationAction@main
         with: 
-          gitops_repo: ${{ secrets.GITOPS_REPO_DEV }}
+          gitops_repo: e-saving/gitops_deployment
           gitops_manage_branch: ${{ env.GITOPS_MANAGE_BRANCH }}
-          gitops_token: ${{ secrets.GITOPS_TOKEN }}
+          gitops_token: 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
           gitops_app_name: ${{ env.GITOPS_APP_NAME }}
       
      
