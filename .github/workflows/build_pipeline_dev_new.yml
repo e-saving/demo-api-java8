@@ -43,5 +43,6 @@ jobs:
           gitops_token: ${{ secrets.GITOPS_TOKEN }}
           gitops_app_name: ${{ secrets.GITOPS_APP_NAME }}
           sourcecode_manage_branch: ${{ secrets.SOURCECODE_MANAGE_BRANCH }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       
      
