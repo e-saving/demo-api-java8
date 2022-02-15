@@ -11,8 +11,8 @@
     <groupId>com.myapp</groupId>
     <artifactId>myapp_server</artifactId>
     <version>0.0.4</version>
+    <name>api-demo-java8</name>	
     <packaging>jar</packaging>
-    <name>api-demo-java8</name>
     <description>Test project</description>
 
     <organization>
