@@ -14,35 +14,53 @@ on:
   
 env:
   #default is develop
-  SOURCECODE_MANAGE_BRANCH: master
-  SOURCECODE_HOME_PATH: api-demo-java8
-  #GITLAB_REPO: git.g-able.com/ais-esaving/service-a.git
-    
-  #POM_VERSION_LINE_NUMBER: 8
-  
-  #SONAR_PROJECT_KEY: api-demo-java8
-  
-  #DOCKER_IMAGE_NAME: api-demo-java8
-  
+  SOURCECODE_MANAGE_BRANCH: master    
   GITOPS_MANAGE_BRANCH: develop
-  GITOPS_APP_NAME: api-demo-java8
-  
   
 jobs:
-  generate-version:
+  build:
     runs-on: ubuntu-latest
     environment: develop
     
     steps:
+      - name: "Setup Variable" 
+        uses: e-saving/birdtest-template-cicd/Dev/SetupVariableAction@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          gitops_token: ${{ secrets.GITOPS_TOKEN }}
+          gitops_manage_branch: ${{ env.GITOPS_MANAGE_BRANCH }}
+          sourcecode_manage_branch: ${{ env.SOURCECODE_MANAGE_BRANCH }}
+          
       - name: "Prepare Configuration" 
         uses: e-saving/birdtest-template-cicd/Dev/PrepareConfigurationAction@main
-        id: test
-        with: 
-          gitops_repo: ${{ secrets.GITOPS_REPO_DEV }}
-          gitops_manage_branch: ${{ env.GITOPS_MANAGE_BRANCH }}
-          gitops_token: ${{ secrets.GITOPS_TOKEN }}
-          gitops_app_name: ${{ env.GITOPS_APP_NAME }}
-          sourcecode_manage_branch: ${{ env.SOURCECODE_MANAGE_BRANCH }}
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          gitops_token: ${{ secrets.GITOPS_TOKEN }}
+
+      - name: "Build and Unit Test" 
+        uses: e-saving/birdtest-template-cicd/Dev/BuildTestCodeAction@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Scan Source Code Quality (SonarQube)" 
+        uses: e-saving/birdtest-template-cicd/Dev/CodeQualityScanAction@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}          
       
-     
+      - name: "Build Container" 
+        uses: e-saving/birdtest-template-cicd/Dev/BuildContainerAction@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Update Deployment Configuration" 
+        uses: e-saving/birdtest-template-cicd/Dev/UpdateDeploymentConfigAction@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          gitops_token: ${{ secrets.GITOPS_TOKEN }}
+          
+      - name: "Complete Notification" 
+        uses: e-saving/birdtest-template-cicd/Dev/NotificationAction@main
+        if: ${{ success() }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          notify_mesg: "Build Pipeline to Develop Complete with version ${{ env.POM_VERSION }}"
