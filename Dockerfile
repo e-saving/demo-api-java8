@@ -12,4 +12,5 @@ WORKDIR /opt/app
 COPY target/*.jar app.jar
 
 # java -jar /opt/app/app.jar
-ENTRYPOINT ["java","-jar","app.jar","--server.port=80"]
+#ENTRYPOINT ["java","-jar","app.jar","--server.port=80"]
+ENTRYPOINT ["java","-jar","app.jar"]
