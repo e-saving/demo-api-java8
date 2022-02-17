@@ -46,7 +46,8 @@ jobs:
       - name: "Scan Source Code Quality (SonarQube)" 
         uses: e-saving/birdtest-template-cicd/Dev/CodeQualityScanAction@main
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}          
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          check_quality_gate: false
       
       - name: "Build Container" 
         uses: e-saving/birdtest-template-cicd/Dev/BuildContainerAction@main
