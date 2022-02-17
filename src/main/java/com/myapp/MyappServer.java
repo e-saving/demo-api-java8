@@ -1,6 +1,7 @@
 package com.myapp;
 
 import com.myapp.util.LoggingInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -25,13 +26,14 @@ public class MyappServer extends WebMvcConfigurerAdapter
         SpringApplication.run(MyappServer.class, args);
     }
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry)
     {
         registry.addInterceptor(new LoggingInterceptor()).addPathPatterns("/**");
     }
 
+    @Value("${swagger.toggle}")
+    private boolean swaggerCtl;
 
     @Bean
     public Docket docket()
@@ -41,7 +43,8 @@ public class MyappServer extends WebMvcConfigurerAdapter
             .apis(RequestHandlerSelectors.basePackage(getClass().getPackage().getName()))
             .paths(PathSelectors.any())
             .build()
-            .apiInfo(generateApiInfo());
+            .apiInfo(generateApiInfo())
+                .enable(swaggerCtl);
     }
 
 
