@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.myapp</groupId>
     <artifactId>myapp_server</artifactId>
-    <version>0.0.8</version>
+    <version>0.0.9</version>
     <name>api-demo-java8</name>	
     <packaging>jar</packaging>
     <description>Test project</description>
